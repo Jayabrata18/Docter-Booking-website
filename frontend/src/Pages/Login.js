@@ -1,10 +1,34 @@
 import React from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+   const navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      // dispatch(showLoading());
+      const response = await axios.post("/api/user/login", values);
+      // dispatch(hideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        localStorage.setItem("token", response.data.data);
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      // dispatch(hideLoading());
+      toast.error("Something went wrong");
+    }
+  };
     return (
       <div className="bg-gray-100 h-screen flex items-center justify-center">
         <div className="w-full max-w-md">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <form
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            onFinish={onFinish}
+          >
             <h1 className="text-center text-3xl font-bold mb-4">User Login</h1>
             <div className="mb-4">
               <label

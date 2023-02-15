@@ -1,30 +1,57 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
+// const express = require("express");
+// const router = express.Router();
 
-router.post("/register", async (req, res) => {
-  try {
-    const userExists = await User.findOne({email: req.body.email});
-    if(userExists) {
-        return res.status(200).send({message: "User already exists", success: false});
-    }
-    const password = req.body.password;
-    const salt = await bcrypt.genSalt(10);
-    const hasedPassword = await bcrypt.hash(password, salt);
-    request.body.password = hasedPassword;
-    const newUser = new User(req.body);
+// const bodyParser = require("body-parser");
+// const mongoose = require("mongoose");
 
-    await newUser.save();
-    res.status(200).send({message: "User created successfully", success: true});
-  } catch (error) {
-    res.status(500).send({message: "Error creating user", success: false, error});
-  }
-});
+// // Define the User Schema
+// const UserSchema = new mongoose.Schema({
+//   username: {
+//     type: String,
+//     required: true,
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+//   password: {
+//     type: String,
+//     required: true,
+//   },
+// });
 
-router.post("/login", async (req, res) => {
-  try {
-  } catch (error) {}
-});
+// // Create a User Model
+// const User = mongoose.model("User", UserSchema);
 
-module.exports = router;
+// // Use body-parser middleware
+// router.use(bodyParser.json());
+// router.use(bodyParser.urlencoded({ extended: false }));
+
+// // Route for User Registration
+// router.post("/register", async (req, res) => {
+//   const { username, email, password } = req.body;
+
+//   // Check if the email is already registered
+//   const existingUser = await User.findOne({ email });
+//   if (existingUser) {
+//     return res.status(400).send("Email already registered");
+//   }
+
+//   // Create a new user
+//   const user = new User({ username, email, password });
+
+//   // Save the user to the database
+//   try {
+//     await user.save();
+//     res.send("User registered successfully");
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// });
+
+// router.post("/login", async (req, res) => {
+//   try {
+//   } catch (error) {}
+// });
+
+// module.exports = router;
